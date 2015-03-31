@@ -17,8 +17,8 @@ namespace SequenceList
 
         public T this[int index]
         {
-            get { return data[index]; }
-            set { data[index] = value; }
+            get { return data[index - 1]; }
+            set { data[index - 1] = value; }
         }
 
         public int MaxSize
@@ -47,6 +47,16 @@ namespace SequenceList
         public bool IsFull()
         {
             return lastIndex == maxSize - 1;
+        }
+
+        public int GetLength()
+        {
+            return lastIndex + 1;
+        }
+
+        public void Clear()
+        {
+            lastIndex = -1;
         }
 
         //List的实际元素区间是1~lastIndex+1
@@ -121,6 +131,64 @@ namespace SequenceList
                 lastIndex--;
             }
             return result;
+        }
+
+        public int Locate(T elem)
+        {
+            //-1代表此list中不存在此元素
+            int index = -1;
+            if (IsEmpty())
+            {
+                Console.WriteLine("顺序表为空！");
+            }
+            else
+            {
+                //注意是i <= lastIndex而不是i <= data.Length
+                for (int i = 0; i <= lastIndex; i++)
+                {
+                    if (elem.Equals(data[i]))
+                    {
+                        index = i + 1;
+                        break;
+                    }
+                }
+                if (index == -1)
+                {
+                    Console.WriteLine("元素{0}在顺序表中不存在", elem);
+                }
+            }
+            return index;
+        }
+
+        public void Append(T elem)
+        {
+            if (IsFull())
+            {
+                Console.WriteLine("顺序表已满！");
+            }
+            else
+            {
+                data[++lastIndex] = elem;
+            }
+        }
+
+        public void Reverse()
+        {
+            int length = lastIndex + 1;
+            for (int i = 0; i < length / 2; i++)
+            {
+                T temp = data[i];
+                data[i] = data[length - 1 - i];
+                data[length - 1 - i] = temp;
+            }
+        }
+
+        public void Print()
+        {
+            for (int i = 0; i <= lastIndex; i++)
+            {
+                Console.WriteLine(data[i]);
+            }
         }
     }
 }
