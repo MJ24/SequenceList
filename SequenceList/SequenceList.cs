@@ -63,7 +63,7 @@ namespace SequenceList
             }
             else
             {
-                result = data[index];
+                result = data[index - 1];
             }
             return result;
         }
